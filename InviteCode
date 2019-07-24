@@ -1,0 +1,51 @@
+Step 1:-
+Go to :
+https://www.hackthebox.eu/
+scroll down a little and click join 
+you'll be redirected here:
+https://www.hackthebox.eu/invite
+
+Step 2:-
+now while you are on :
+https://www.hackthebox.eu/invite
+let's open the Inspection tools Ctrl+Shift+I
+read through the elements
+after carefully reading, you will find a src called /js/inviteapi.min.js
+
+Step 3:- 
+so let's go to  https://www.hackthebox.eu/js/inviteapi.min.js
+
+and we see this function :
+eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('1 i(4){h 8={"4":4};$.9({a:"7",5:"6",g:8,b:\'/d/e/n\',c:1(0){3.2(0)},f:1(0){3.2(0)}})}1 j(){$.9({a:"7",5:"6",b:\'/d/e/k/l/m\',c:1(0){3.2(0)},f:1(0){3.2(0)}})}',24,24,'response|function|log|console|code|dataType|json|POST|formData|ajax|type|url|success|api|invite|error|data|var|verifyInviteCode|makeInviteCode|how|to|generate|verify'.split('|'),0,{}))
+READ CAREFULLY youll find a command called makeInviteCode
+
+Step 4:- 
+Go back to https://www.hackthebox.eu/invite
+open Inspection Tools again and navigate to the "Console" tab
+Here we want to try out our newly discovered command to create our invitation code 
+enter makeInviteCode() into the console box and check the drop-down arrow
+
+Step 5:- 
+Read the Data tab of the newly created invitation code and the Encryption type ; like this
+
+data: Object { data: "SW4gb3JkZXIgdG8gZ2VuZXJhdGUgdGhlIGludml0ZSBjb2RlLCBtYWtlIGEgUE9TVCByZXF1ZXN0IHRvIC9hcGkvaW52aXRlL2dlbmVyYXRl", enctype: "BASE64" }
+
+
+Step6:- 
+Decrypt and the output says something like : 
+"In order to generate the invite code, make a POST request to /api/invite/generate"
+
+Step7:-
+lets make that post request using curl tool 
+curl -XPOST https://www.hackthebox.eu/api/invite/generate
+and the result is:
+{"success":1,"data":{"code":"VFVQVUwtVlNDRkEtVkZXRVMtU1ZUS0otS0ZPQ0c=","format":"encoded"},"0":200}
+
+Step 8:- 
+You this https://www.base64decode.org/ to decode the encrypted code:"VFVQVUwtVlNDRkEtVkZXRVMtU1ZUS0otS0ZPQ0c="
+then you will get decoded key
+TUPUL-VSCFA-VFWES-SVTKJ-KFOCG
+
+step 9:- 
+Enter the decoded string into the Invitation Box and Boom! you're in 
+Sign up and let the hacking begin 
